@@ -5,9 +5,20 @@ set -e
 . tools/lib/lib.sh
 
 function docker_tag_exists() {
+  echo $1
+  if [[ $1 == ghcr* ]]
+  then
+    # As of right now ghcr.io API is still under progress and it doesn't provide 
+    # manifest API similar to docker so added this check
+    IMAGE_WITH_VERSION="$1":"$2"
+    printf "\tIMAGE WITH VERSION: %s\n" "$IMAGE_WITH_VERSION"
+    docker pull $IMAGE_WITH_VERSION
+    docker inspect --type=image $IMAGE_WITH_VERSION > /dev/null 2>&1
+  else
     URL=https://hub.docker.com/v2/repositories/"$1"/tags/"$2"
     printf "\tURL: %s\n" "$URL"
     curl --silent -f -lSL "$URL" > /dev/null
+  fi
 }
 
 checkPlatformImages() {
