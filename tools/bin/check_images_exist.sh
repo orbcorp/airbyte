@@ -28,7 +28,8 @@ checkNormalizationImages() {
 checkConnectorImages() {
   echo "Checking connector images exist..."
 
-  CONNECTOR_DEFINITIONS=$(grep "dockerRepository" -h -A1 airbyte-config/init/src/main/resources/seed/*.yaml | grep -v -- "^--$" | tr -d ' ')
+  # Added `: airbyte/` since we have added external images also and we don't' want to check those images
+  CONNECTOR_DEFINITIONS=$(grep "dockerRepository: airbyte/" -h -A1 airbyte-config/init/src/main/resources/seed/*.yaml | grep -v -- "^--$" | tr -d ' ')
   [ -z "CONNECTOR_DEFINITIONS" ] && echo "ERROR: Could not find any connector definition." && exit 1
 
   while IFS=":" read -r _ REPO; do
