@@ -6893,7 +6893,7 @@
     supportsNormalization: false
     supportsDBT: false
     supported_destination_sync_modes: []
-- dockerImage: "airbyte/source-orb:0.1.2"
+- dockerImage: "airbyte/source-orb:0.1.3"
   spec:
     documentationUrl: "https://docs.withorb.com/"
     connectionSpecification:
@@ -6902,7 +6902,7 @@
       type: "object"
       required:
       - "api_key"
-      additionalProperties: false
+      additionalProperties: true
       properties:
         api_key:
           type: "string"
